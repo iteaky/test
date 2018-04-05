@@ -14,7 +14,7 @@ Strings.
 Example:
 
 request:
-![Image alt](https://git.epam.com/Konstantin_Evstafev/test/blob/master/1.JPG)
+![Image alt](https://git.epam.com/Konstantin_Evstafev/test/blob/master/1.PNG)
 
 response:
-![Image alt](https://git.epam.com/Konstantin_Evstafev/test/blob/master/2.JPG)
+![Image alt](https://git.epam.com/Konstantin_Evstafev/test/blob/master/2.PNG)

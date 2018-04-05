@@ -1,4 +1,4 @@
-You shoud have maven installed on your computer.
+You should have maven installed on your computer.
 In cmd:
 1) Change working directory to project root directory
 2) mvn clean package
@@ -6,10 +6,15 @@ In cmd:
 
 The app will star on localhost:8080
 
+Use credentials:
+Login: admin
+Password: admin
+
 There is two endpoint:
-1) You can send GET request without pararametrs on localhost:8080/fact.
-2) You can send POST reques on localhost:8080/fact with  JSON contains list of 
+1) You can send GET request without parameters on localhost:8080/fact.
+2) You can send POST request on localhost:8080/fact with  JSON contains list of 
 Strings.
+
 
 Example:
 

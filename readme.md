@@ -13,6 +13,8 @@ Strings.
 
 Example:
 
-request
+request:
+![Image alt](https://git.epam.com/Konstantin_Evstafev/test/blob/master/1.JPG)
 
-response
+response:
+![Image alt](https://git.epam.com/Konstantin_Evstafev/test/blob/master/2.JPG)

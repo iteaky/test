@@ -1,0 +1,616 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xf="http://www.elsevier.com/2007/XfSchema">
+
+    <!-- ======================== Types ====================== -->
+    <xsd:complexType name="textType" mixed="true">
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="sub" type="textType"/>
+            <xsd:element name="sup" type="textType"/>
+            <xsd:element name="i" type="textType"/>
+            <xsd:element name="hi" type="textType"/>
+            <xsd:element name="br" type="textType"/>
+        </xsd:choice>
+        <xsd:attribute name="highlight" type="xsd:string"/>
+        <xsd:attribute name="rn" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:simpleType name="intTypeBase">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[\-+]?\d+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="intType">
+        <xsd:simpleContent>
+            <xsd:extension base="intTypeBase">
+                <xsd:attribute name="highlight" type="xsd:string"/>
+                <xsd:attribute name="rn" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="realTypeBase">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[\-+]?\d+([.,]\d*)?([eE][\-+]?\d+)?"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="realType">
+        <xsd:simpleContent>
+            <xsd:extension base="realTypeBase">
+                <xsd:attribute name="highlight" type="xsd:string"/>
+                <xsd:attribute name="rn" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="rangeTypeBase">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[\-+]?\d+([.,]\d*)?([eE][\-+]?\d+)?( - [\-+]?\d+([.,]\d*)?([eE][\-+]?\d+)?)?"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="rangeType">
+        <xsd:simpleContent>
+            <xsd:extension base="rangeTypeBase">
+                <xsd:attribute name="highlight" type="xsd:string"/>
+                <xsd:attribute name="rn" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <!-- ========================= XF ======================== -->
+    <xsd:element name="xf" type="xfType">
+        <xsd:annotation>
+            <xsd:appinfo>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="xfType">
+        <xsd:sequence>
+            <xsd:element name="substances" type="substancesType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:ctxletter=S|substances
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="substancesType">
+        <xsd:sequence>
+            <xsd:element name="substance" type="substanceType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="substanceType">
+        <xsd:sequence>
+            <xsd:element name="IDE" type="IDEType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=true|xf:shortname=IDE|xf:code=ID_|xf:ranks=0:1:1|Substance Identification
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="FA" type="FAType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=false|xf:shortname=FA|xf:code=FA_|xf:ranks=1:1:0|Field Availability
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PH" type="PHType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=true|xf:shortname=PH|xf:code=AX_|xf:ranks=2:1:0|Hierarchy Entries
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="FLST" type="FLSTType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=false|xf:shortname=FLST|xf:code=AZ_|xf:ranks=3:1:0|Field Availability List
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="BI" type="BIType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=false|xf:shortname=BI|xf:code=ZJ_|xf:ranks=5:1:10|Basic Indexes
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="YY" type="YYType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=exists|xf:display=false|xf:shortname=YY|xf:code=YY_|xf:ranks=6:1:0|Structure
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SUBLINK" type="SUBLINKType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=exists|xf:display=true|xf:shortname=SUBLINK|xf:code=XF_|xf:ranks=7:1:3|Database Link
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SIMIL" type="SIMILType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=true|xf:shortname=SIMIL|xf:code=SI_|xf:ranks=8:1:4|Substance similarity
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MB" type="MBType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=exists|xf:display=false|xf:shortname=MB|xf:code=MB_|xf:ranks=9:1:5|Molecular BIN
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="TB" type="TBType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=exists|xf:display=true|xf:shortname=TB|xf:code=TB_|xf:ranks=10:1:6|Table of Content
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="BP" type="BPType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=exists|xf:display=true|xf:shortname=BP|xf:code=HF_|xf:ranks=11:1:7|Boiling Point
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SBI" type="SBIType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=false|xf:shortname=SBI|xf:code=ZM_|xf:ranks=12:1:6|Substance Basic Index
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="index" type="xsd:integer"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="IDEType">
+        <xsd:sequence>
+            <xsd:element name="IDE.PID" type="intType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=true|xf:shortname=PID|xf:code=ID1|xf:ranks=6:6:6:0:0:0|xf:refer=primekey|xf:sortcode=ID1|xf:presented=true|xf:role=primekey|PubChem Compound ID
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.CN" type="textType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=CN|xf:code=ID4|xf:ranks=7:7:7:1:0:0|xf:refer=nothing|xf:format=CN|xf:presented=true|xf:role=name|Chemical Name
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.CNS" type="textType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=word|xf:display=false|xf:shortname=CNS|xf:code=ZWY|xf:ranks=8:8:8:1:0:0|xf:refer=nothing|xf:format=CN|xf:presented=true|xf:role=namesegment|Chemical Name Segment
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.SYN" type="textType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=SYN|xf:code=ID5|xf:ranks=9:9:9:1:0:0|xf:refer=nothing|xf:format=CN|xf:presented=true|Synonyms
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.RN" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=RN|xf:code=ID3|xf:ranks=10:10:10:0:0:0|xf:refer=nothing|xf:presented=true|xf:role=casrn|CAS Registry Number
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.REG" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=REG|xf:code=IDM|xf:ranks=11:11:11:0:0:0|xf:refer=nothing|xf:sortcode=IDM|xf:role=regstring|Registration String
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.LSF" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=LSF|xf:code=IDB|xf:ranks=12:12:12:0:0:0|xf:refer=nothing|xf:format=CN,SUFO|xf:presented=true|Linear Structure Formula
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.MF" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=MF|xf:code=IDD|xf:ranks=13:13:13:0:0:0|xf:refer=nothing|xf:sortcode=IDD|xf:format=SUFO|xf:fedit=MF|xf:presented=true|xf:role=mofo|Molecular Formula
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.MOFO" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=MOFO|xf:code=IDE|xf:ranks=14:14:14:0:0:0|xf:refer=nothing|xf:fedit=MOFO|xf:presented=true|Search MF Range
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.CHA" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=false|xf:shortname=CHA|xf:code=IDF|xf:ranks=15:15:15:0:0:0|xf:refer=nothing|xf:presented=true|Charge
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.ELC" type="textType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=ELC|xf:code=IDG|xf:ranks=16:16:16:1:0:0|xf:refer=nothing|xf:sortcode=IDG|xf:format=SUFO|xf:fedit=ELC|xf:presented=true|Element Counts
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.ELS" type="textType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=ELS|xf:code=IFG|xf:ranks=17:17:17:1:0:0|xf:refer=nothing|xf:sortcode=IFG|xf:presented=true|Element Symbols
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.NA" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=false|xf:shortname=NA|xf:code=IDH|xf:ranks=18:18:18:0:0:0|xf:refer=nothing|xf:presented=true|Number of Atoms
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.NE" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=false|xf:shortname=NE|xf:code=IDI|xf:ranks=19:19:19:0:0:0|xf:refer=nothing|xf:presented=true|Number of Elements
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.NF" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=false|xf:shortname=NF|xf:code=IDJ|xf:ranks=20:20:20:0:0:0|xf:refer=nothing|xf:sortcode=IDJ|xf:presented=true|Number of Fragments
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.MW" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=true|xf:shortname=MW|xf:code=IDK|xf:ranks=21:21:21:0:0:0|xf:refer=nothing|xf:sortcode=Z_K|xf:format=CONC|xf:presented=true|xf:role=mass|Molecular Weight
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.INCHI" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=INCHI|xf:code=ID6|xf:ranks=22:22:22:0:0:0|xf:refer=nothing|xf:presented=true|xf:role=inchi|InChI Key
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.NUMREF" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=true|xf:shortname=NUMREF|xf:code=IDN|xf:ranks=23:23:23:0:0:0|xf:refer=nothing|xf:sortcode=IDN|Number of References
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.XRN" type="realType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=true|xf:shortname=XRN|xf:code=ID7|xf:ranks=24:24:24:1:0:0|xf:refer=nothing|xf:sortcode=ID7|xf:role=rx_xrn|Reaxys Registry Number
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.XRNPA" type="realType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=true|xf:shortname=XRNPA|xf:code=IDA|xf:ranks=25:25:25:1:0:0|xf:refer=nothing|xf:sortcode=IDA|Reaxys Registry Number partial
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.XRNEX" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=XRNEX|xf:code=ID8|xf:ranks=26:26:26:0:0:0|xf:refer=nothing|xf:sortcode=ID8|Reaxys Registry Number exists
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.TERM" type="textType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=TERM|xf:code=ID9|xf:ranks=27:27:27:1:0:0|xf:refer=nothing|xf:sortcode=ID9|Content terms
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.SUBAVAIL" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=SUBAVAIL|xf:code=IFX|xf:ranks=28:28:28:0:0:0|xf:refer=nothing|xf:sortcode=XXA|xf:role=other_db|Foreign Database Availability
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.ED" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=ED|xf:code=IDV|xf:ranks=29:29:29:0:0:0|xf:refer=nothing|xf:sortcode=IDV|Entry Date
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="IDE.UPD" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=UPD|xf:code=IDW|xf:ranks=30:30:30:0:0:0|xf:refer=nothing|xf:sortcode=IDW|Update Date
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FAType">
+        <xsd:sequence>
+            <xsd:element name="FA.FA" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=word|xf:display=false|xf:shortname=FA|xf:code=FA_|xf:ranks=1:1:1:0:0:0|xf:refer=nothing|Field Availability
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PHType">
+        <xsd:sequence>
+            <xsd:element name="PH.PH" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=word|xf:display=false|xf:shortname=PH|xf:code=AX_|xf:ranks=2:2:2:0:0:0|xf:refer=nothing|xf:sortcode=AX_|Hierarchy Entries
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="FLSTType">
+        <xsd:sequence>
+            <xsd:element name="FLST.FCODE" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=FCODE|xf:code=AZ1|xf:ranks=3:3:3:0:0:0|xf:refer=nothing|Field Code
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="FLST.FNAME" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=FNAME|xf:code=AZ2|xf:ranks=4:4:4:0:0:0|xf:refer=nothing|Field Name
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="FLST.FOCC" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=FOCC|xf:code=AZ3|xf:ranks=5:5:5:0:0:0|xf:refer=nothing|Occurrence
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BIType">
+        <xsd:sequence>
+            <xsd:element name="BI.BISUB" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=word|xf:display=false|xf:shortname=BISUB|xf:code=YS1|xf:ranks=31:31:31:0:0:0|xf:refer=nothing|xf:role=bas_sub|Substance Basic Index
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="YYType">
+        <xsd:sequence>
+            <xsd:element name="YY.STR" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=false|xf:shortname=STR|xf:code=YY1|xf:ranks=32:32:32:0:0:0|xf:refer=nothing|xf:role=sub_str|Structure
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="YY.SIMSORT" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=none|xf:display=false|xf:shortname=SIMSORT|xf:code=YY3|xf:ranks=33:33:33:0:0:0|xf:refer=nothing|Similarity sortable
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SUBLINKType">
+        <xsd:sequence>
+            <xsd:element name="SUBLINK.NAME" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=SUBLINK.NAME|xf:code=XF1|xf:ranks=34:34:34:0:0:0|xf:refer=nothing|xf:sortcode=XF1|Database
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SUBLINK.KEY" type="realType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=true|xf:shortname=SUBLINK.KEY|xf:code=XF2|xf:ranks=35:35:35:1:0:0|xf:refer=nothing|xf:sortcode=XF2|Primary Key
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SIMILType">
+        <xsd:sequence>
+            <xsd:element name="SIMIL.PERC" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=true|xf:shortname=SIMIL.PERC|xf:code=SI1|xf:ranks=36:36:36:0:0:0|xf:refer=nothing|xf:sortcode=SI1|Similarity percentage
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="MBType">
+        <xsd:sequence>
+            <xsd:element name="MB.MBB" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=MB.MBB|xf:code=MBB|xf:ranks=37:37:37:0:0:0|xf:refer=nothing|xf:sortcode=MBB|xf:presented=true|Thumb
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MB01" type="MB01" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="MB02" type="MB02" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="MB03" type="MB03" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="MB01">
+        <xsd:sequence>
+            <xsd:element name="MB.MBR" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=false|xf:shortname=MB.MBR|xf:code=MBR|xf:ranks=38:38:38:0:1:0|xf:refer=nothing|xf:sortcode=MBR|xf:presented=true|RingBin
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MB.MBS" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=MB.MBS|xf:code=MBS|xf:ranks=39:38:39:0:1:0|xf:refer=nothing|RingRange
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MB.MBT" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=MB.MBT|xf:code=MBT|xf:ranks=40:38:40:0:1:0|xf:refer=nothing|RingText
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="MB02">
+        <xsd:sequence>
+            <xsd:element name="MB.MBC" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=false|xf:shortname=MB.MBC|xf:code=MBC|xf:ranks=41:41:41:0:2:0|xf:refer=nothing|xf:sortcode=MBC|ChainBin
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MB.MBD" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=MB.MBD|xf:code=MBD|xf:ranks=42:41:42:0:2:0|xf:refer=nothing|ChainRange
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MB.MBE" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=MB.MBE|xf:code=MBE|xf:ranks=43:41:43:0:2:0|xf:refer=nothing|ChainText
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="MB03">
+        <xsd:sequence>
+            <xsd:element name="MB.MBM" type="realType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=false|xf:shortname=MB.MBM|xf:code=MBM|xf:ranks=44:44:44:0:3:0|xf:refer=nothing|xf:sortcode=MBM|MolBin
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MB.MBN" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=MB.MBN|xf:code=MBN|xf:ranks=45:44:45:0:3:0|xf:refer=nothing|MolRange
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MB.MBO" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=MB.MBO|xf:code=MBO|xf:ranks=46:44:46:0:3:0|xf:refer=nothing|MolText
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TBType">
+        <xsd:sequence>
+            <xsd:element name="TB.ED" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=false|xf:shortname=TB.ED|xf:code=TBV|xf:ranks=47:47:47:0:0:0|xf:refer=nothing|Entry Date
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="TB.HEADING" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=TB.HEADING|xf:code=TB1|xf:ranks=48:48:48:0:0:0|xf:refer=nothing|xf:presented=true|Heading
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="TB.DETAIL" type="textType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=TB.DETAIL|xf:code=TB2|xf:ranks=49:49:49:1:0:0|xf:refer=nothing|Detail
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="TB.SUBCATG" type="textType" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=phrase|xf:display=true|xf:shortname=TB.SUBCATG|xf:code=TB3|xf:ranks=50:50:50:1:0:0|xf:refer=nothing|Sub-categories
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BPType">
+        <xsd:sequence>
+            <xsd:element name="BP.BP" type="rangeType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=number|xf:display=true|xf:shortname=BP|xf:code=HF1|xf:ranks=51:51:51:0:0:0|xf:refer=nothing|xf:unit=&amp;#x00B0;C|xf:sortcode=Z_M|Boiling Point
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SBIType">
+        <xsd:sequence>
+            <xsd:element name="SBI.BISUB" type="textType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:appinfo>
+                        xf:search=word|xf:display=false|xf:shortname=BISUB|xf:code=YS1|xf:ranks=52:52:52:0:0:0|xf:refer=nothing|xf:presented=true|Substance Basic Index
+                    </xsd:appinfo>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

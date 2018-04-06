@@ -3,7 +3,10 @@ In cmd:
 1) Change working directory to project root directory
 2) mvn clean package
 3) java -jar target/test-0.0.1-SNAPSHOT.jar
+4) You can set route to your XSD file as parameter "xsdLocation" like:
+ java -jar target/test-0.0.1-SNAPSHOT.jar --xsdLocation=C:\Users\konstantin_evstafev\Desktop\pu.xsd
 
+If you will not set route to your XSD file, application will use default XSD.
 The app will star on localhost:8080
 
 Use credentials:

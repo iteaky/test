@@ -22,6 +22,7 @@ Login: admin
 Password: admin
 
 There is two endpoint:
+
 1) You can send GET request without parameters on localhost:8080/fact.
 
 2) You can send POST request on localhost:8080/fact with  JSON contains list of 

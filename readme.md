@@ -13,21 +13,22 @@ In cmd:
  
 
 If you will not set route to your XSD file, application will use default XSD.
-(#Parag)
+
+
 The app will star on localhost:8080
-(#Parag)
+
 
 Use credentials:
 Login: admin
 Password: admin
-(#Parag)
+
 There is two endpoint:
 
 1) You can send GET request without parameters on localhost:8080/fact.
 
 2) You can send POST request on localhost:8080/fact with  JSON contains list of 
 Strings.
-(#Parag)
+
 
 Example:
 

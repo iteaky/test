@@ -28,14 +28,14 @@ public class FactsController {
         this.factsService = factsService;
     }
 
-    @RequestMapping(value = "/fact", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/facts", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<String>> getFacts() throws IOException, XMLStreamException {
         logger.info("GET request to /fact");
         return new ResponseEntity<>(factsService.getFacts(), HttpStatus.OK);
     }
 
 
-    @RequestMapping(value = "/fact", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/facts", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<List<String>> getFactsWithOptions(@RequestBody List<String> params) throws IOException, XMLStreamException {
         logger.info("POST request to /fact with params: " + params);
         return new ResponseEntity<>(factsService.getFactsWithAdditional(params), HttpStatus.OK);

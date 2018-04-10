@@ -1,21 +1,18 @@
 package com.reaxys.test.service.Implimentations;
 
 import com.reaxys.test.service.interfaces.XmlService;
-import jdk.nashorn.internal.objects.annotations.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +27,12 @@ public class XmlServiceImpl implements XmlService {
     @Value("${xsdLocation}")
     private String xsdLocation;
 
-    /** Parse XML to Map where key is Fact shortcut and value is additionals with full name
+    @Autowired
+    private ResourceLoader resourceLoader;
+
+    /**
+     * Parse XML to Map where key is Fact shortcut and value is additionals with full name
+     *
      * @return Map of values prepared for transform to Facts
      * @throws IOException
      * @throws XMLStreamException
@@ -43,7 +45,8 @@ public class XmlServiceImpl implements XmlService {
         String key = EMPTY;
 
         XMLInputFactory factory = XMLInputFactory.newInstance();
-        XMLStreamReader parser = factory.createXMLStreamReader(new FileInputStream(xsdLocation));
+        Resource resource = resourceLoader.getResource(xsdLocation);
+        XMLStreamReader parser = factory.createXMLStreamReader(resource.getInputStream());
 
         while (parser.hasNext()) {
 

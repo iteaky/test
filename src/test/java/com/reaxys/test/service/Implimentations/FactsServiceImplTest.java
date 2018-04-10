@@ -1,26 +1,17 @@
 package com.reaxys.test.service.Implimentations;
 
 import com.reaxys.test.pojo.Filter;
-import com.reaxys.test.service.interfaces.XmlService;
-import com.sun.org.apache.bcel.internal.generic.FADD;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.xml.stream.XMLStreamException;
-import java.io.IOException;
 import java.util.*;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -28,11 +19,9 @@ import static org.mockito.Mockito.when;
 public class FactsServiceImplTest {
 
     @Mock
-    private XmlServiceImpl xmlService;
-
-    @Mock
     Filter filter;
-
+    @Mock
+    private XmlServiceImpl xmlService;
     @InjectMocks
     private FactsServiceImpl sut;
 

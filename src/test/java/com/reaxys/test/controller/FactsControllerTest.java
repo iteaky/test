@@ -23,15 +23,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 public class FactsControllerTest {
 
-    @Mock
-    private FactsServiceImpl service;
-
-    private ObjectMapper mapper;
-
-    private MockMvc mockMvc;
-
     @InjectMocks
     FactsController factsController;
+    @Mock
+    private FactsServiceImpl service;
+    private ObjectMapper mapper;
+    private MockMvc mockMvc;
 
     @Before
     public void setUp() throws Exception {

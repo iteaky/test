@@ -2,7 +2,6 @@ package com.reaxys.test.service.Implimentations;
 
 import com.reaxys.test.pojo.Fact;
 import com.reaxys.test.pojo.Filter;
-import com.reaxys.test.service.interfaces.FactService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class FactsServiceImpl implements FactService {
+public class FactsServiceImpl {
 
     private final static Logger logger = LoggerFactory.getLogger(FactsServiceImpl.class);
 
@@ -27,32 +26,34 @@ public class FactsServiceImpl implements FactService {
         this.filters = filter;
     }
 
-    /** Find all facts from XSD scheme which fits additionals given with all additionals
+    /**
+     * Find all facts from XSD scheme which fits additionals given with all additionals
+     *
      * @return List of Facts in String format
      * @throws IOException
      * @throws XMLStreamException
      */
-    @Override
     public List<String> getFacts() throws IOException, XMLStreamException {
-        logger.info("Method getFacts() was called" );
+        logger.info("Method getFacts() was called");
         List<Fact> list = getListOfFacts();
-        final List<String> result = collectFacts(list);
+        List<String> result = collectFacts(list);
         logger.info("Method getFacts() return: " + result);
         return result;
     }
 
-    /** Find all facts with required additionals from XSD scheme which fits given additionals
+    /**
+     * Find all facts with required additionals from XSD scheme which fits given additionals
+     *
      * @param params List of required additionals
      * @return List of Facts in String format
      * @throws IOException
      * @throws XMLStreamException
      */
-    @Override
     public List<String> getFactsWithAdditional(List<String> params) throws IOException, XMLStreamException {
-        logger.info("Method getFactsWithAdditional() was called with params: " + params );
+        logger.info("Method getFactsWithAdditional() was called with params: " + params);
         List<Fact> list = getListOfFacts();
         List<Fact> factsWithAdditionals = filterFactsByAdditional(list, params);
-        final List<String> result = collectFacts(factsWithAdditionals);
+        List<String> result = collectFacts(factsWithAdditionals);
         logger.info("Method getFactsWithAdditional() return: " + result);
         return result;
 
@@ -103,7 +104,8 @@ public class FactsServiceImpl implements FactService {
         for (String s : list) {
             s = s.substring(3);
             String[] split = s.split("=");
-            map.put(split[0], split[1]);
+            if (split.length > 1)
+                map.put(split[0], split[1]);
         }
         return map;
     }
